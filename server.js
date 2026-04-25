@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import pool from "./database/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import contentRoutes from "./routes/content.routes.js";
+import approvalRoutes from "./routes/approval.routes.js";
 
 const app = express();
 dotenv.config();
@@ -14,6 +15,7 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/auth", authRoutes);
 app.use("/content", contentRoutes);
+app.use("/approval", approvalRoutes);
 
 const startServer = async () => {
   try {
