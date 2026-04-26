@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.routes.js";
 import contentRoutes from "./routes/content.routes.js";
 import approvalRoutes from "./routes/approval.routes.js";
 import assignmentRoutes from "./routes/assignment.routes.js";
+import { rateLimiter } from "./utils/rateLimiter.js";
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/auth", authRoutes);
 app.use("/content", contentRoutes);
 app.use("/approval", approvalRoutes);
-app.use("/assignment", assignmentRoutes);
+app.use("/assignment", rateLimiter, assignmentRoutes);
 
 const startServer = async () => {
   try {
