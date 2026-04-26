@@ -15,7 +15,7 @@ export const query = async (sql, params) => {
     const [rows] = await pool.execute(sql, params);
     return rows;
   } catch (error) {
-    console.error("DB Query Error ::", err.message);
+    console.error("DB Query Error ::", error.message);
   }
 };
 

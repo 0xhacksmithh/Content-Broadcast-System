@@ -3,6 +3,7 @@ import {
   getPendingContent,
   approveContent,
   rejectContent,
+  getContent,
 } from "../controllers/approval.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { allowRoles } from "../middlewares/role.middleware.js";
@@ -15,6 +16,8 @@ router.get(
   allowRoles("principal"),
   getPendingContent,
 );
+
+router.get("/content", authMiddleware, allowRoles("principal"), getContent);
 
 router.post(
   "/:id/approve",

@@ -1,4 +1,5 @@
 import { query } from "../database/db.js";
+import { buildFilters } from "../utils/filterBuilder.js";
 
 // Get Pending Content
 export const getPendingContent = async (req, res) => {
@@ -9,6 +10,45 @@ export const getPendingContent = async (req, res) => {
 
     res.json(result);
   } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Dynamic Controller
+export const getContent = async (req, res) => {
+  try {
+    const { where, values } = buildFilters(req.query);
+    // console.log(where);
+    // console.log(values);
+
+    let sql = `SELECT * FROM content ${where} ORDER BY created_at DESC`;
+
+    const page = parseInt(req.query.page || 1);
+    const limit = parseInt(req.query.limit || 3);
+
+    // sql += " LIMIT ? OFFSET ?";
+    // values.push(limit, (page - 1) * limit);
+    const offset = (page - 1) * limit;
+
+    sql += ` LIMIT ${limit} OFFSET ${offset}`;
+
+    console.log(`Query is ${sql}`);
+    console.log(`Values ${values}`);
+
+    // console.log("isArray:", Array.isArray(values));
+    // console.log("values:", values);
+    // console.log(
+    //   "types:",
+    //   values.map((v) => typeof v),
+    // );
+
+    const data = await query(sql, values);
+
+    // console.log(data);
+
+    res.json(data);
+  } catch (err) {
+    console.error("ERROR:", err);
     res.status(500).json({ message: err.message });
   }
 };
