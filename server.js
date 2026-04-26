@@ -1,14 +1,14 @@
 import express from "express";
-import dotenv from "dotenv";
+import { port } from "./config/index.js";
+
 import pool from "./database/db.js";
+
 import authRoutes from "./routes/auth.routes.js";
 import contentRoutes from "./routes/content.routes.js";
 import approvalRoutes from "./routes/approval.routes.js";
+import assignmentRoutes from "./routes/assignment.routes.js";
 
 const app = express();
-dotenv.config();
-
-const port = process.env.PORT || 8000;
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
@@ -16,6 +16,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/auth", authRoutes);
 app.use("/content", contentRoutes);
 app.use("/approval", approvalRoutes);
+app.use("/assignment", assignmentRoutes);
 
 const startServer = async () => {
   try {

@@ -23,8 +23,8 @@ export const uploadContent = async (req, res) => {
         req.file.mimetype,
         req.file.size,
         req.user.id,
-        start_time || null,
-        end_time || null,
+        start_time ? new Date(start_time) : new Date(), // We Required Start and End Time
+        end_time ? new Date(end_time) : new Date(Date.now() + 30 * 60 * 1000), // Default  30 min for now
       ],
     );
 
@@ -40,8 +40,8 @@ export const uploadContent = async (req, res) => {
     }
 
     res.json({ "contentID :: ": contentId });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json(error);
   }
 };
 
