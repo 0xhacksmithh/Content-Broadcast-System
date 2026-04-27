@@ -8,6 +8,7 @@ import contentRoutes from "./routes/content.routes.js";
 import approvalRoutes from "./routes/approval.routes.js";
 import assignmentRoutes from "./routes/assignment.routes.js";
 import { rateLimiter } from "./utils/rateLimiter.js";
+import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 
 const app = express();
 
@@ -32,5 +33,7 @@ const startServer = async () => {
     process.exit(1);
   }
 };
+
+app.use(errorHandler);
 
 startServer();

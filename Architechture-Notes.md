@@ -172,11 +172,13 @@ Architechture-Notes.md
 **Core Middlewares:**
 
 ```
-authenticate → JWT verification
+`auth.middleware.js` → JWT verification
 
-allowRoles → RBAC enforcement
+`role.middleware.js` → RBAC enforcement
 
-multer → file upload handling
+`upload.middleware.js` → File upload handling via Multer
+
+`errorHandler.middleware.js` → Error handling
 ```
 
 ## 9. Scalability Approach
